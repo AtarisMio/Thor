@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ ! -f /etc/synoinfo.conf ];
+then
+  rand=$(cat /proc/sys/kernel/random/uuid | awk -F '-' '{print $1}')
+  echo "unique=\"synology_${rand}_720+\"" > /etc/synoinfo.conf
+fi
+rm /.dockerenv
+
+echo '{"port":5050, "internal": false, "dir":"/downloads"}' > /tmp/go-build/pan-xunlei-com/config.json
+
+/tmp/go-build/pan-xunlei-com/xunlei_cgi
