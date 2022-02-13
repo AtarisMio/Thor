@@ -3,17 +3,15 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install curl git xz-utils dpkg-dev
 ARG VERSION=2.2.3
 WORKDIR /work
-COPY xunlei.spk /work/
+COPY xunlei.amd64.spk /work/
 RUN echo 'start' && \
     ls -l && \
-    tar -xvf xunlei.spk package.tgz && \
+    tar -xvf xunlei.$(dpkg-architecture  -q DEB_BUILD_ARCH).spk package.tgz && \
     rm -rf xunlei.spk && \
     tar -xvf package.tgz && \
     rm -rf package.tgz && \
-    sed -i 's/mounts/status/' bin/bin/xunlei-pan-cli.${VERSION}.amd64 && \
-    sed -i 's/mounts/status/' bin/bin/xunlei-pan-cli-launcher.amd64 && \
-    # sed -i 's/mounts/status/' ui/index.cgi && \
-    mv bin/bin/xunlei-pan-cli-launcher.amd64 bin/bin/xunlei-pan-cli-launcher && \
+    sed -i 's/mounts/status/' bin/bin/xunlei-pan-cli-launcher.$(dpkg-architecture  -q DEB_BUILD_ARCH) && \
+    mv bin/bin/xunlei-pan-cli-launcher.$(dpkg-architecture  -q DEB_BUILD_ARCH) bin/bin/xunlei-pan-cli-launcher && \
     mv ui/index.cgi bin/bin/xunlei-pan-cli-web && \
     echo 'done'
 
