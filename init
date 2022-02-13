@@ -13,6 +13,7 @@ adduser -q --system --home $PWD --shell "/bin/sh" --no-create-home --uid $UID --
 fi
 
 chown -R "$(id -un $UID):$(id -gn $UID)" /tmp/go-build/pan-xunlei-com/
+chown -R "$(id -un $UID):$(id -gn $UID)" /var/packages/pan-xunlei-com/
 chown "$(id -un $UID):$(id -gn $UID)" /downloads
 su - "$(id -un $UID)" -c "/tmp/go-build/pan-xunlei-com/xunlei_cgi"
 # /tmp/go-build/pan-xunlei-com/xunlei_cgi
