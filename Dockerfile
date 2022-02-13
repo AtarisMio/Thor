@@ -34,10 +34,14 @@ RUN echo 'start' && \
     mkdir -p /usr/syno/synoman/webman/modules && \
     echo '#!/usr/bin/env sh' > /usr/syno/synoman/webman/modules/authenticate.cgi && \
     echo 'echo dosk' >> /usr/syno/synoman/webman/modules/authenticate.cgi && \
+    echo '{"port":5050, "internal": false, "dir":"/downloads"}' > /tmp/go-build/pan-xunlei-com/config.json && \
+    chmod 755 /usr/syno/synoman/webman/modules/authenticate.cgi && \
     mkdir -p /var/packages/pan-xunlei-com/target/var && \
+    mkdir -p /tmp/go-build/pan-xunlei-com/shares && \
     ln -s /tmp/go-build/pan-xunlei-com/target/var/pan-xunlei-com.sock /var/packages/pan-xunlei-com/target/var/pan-xunlei-com.sock && \
     echo 'done'
 ADD init /init
+ENV UID=99 GID=100
 EXPOSE 5050
 VOLUME ["/downloads"]
 ENTRYPOINT ["/init"]

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 if [ ! -f /etc/synoinfo.conf ];
 then
@@ -7,6 +7,12 @@ then
 fi
 rm /.dockerenv
 
-echo '{"port":5050, "internal": false, "dir":"/downloads"}' > /tmp/go-build/pan-xunlei-com/config.json
+# create user
+if ! id -un $UID &> /dev/null; then
+adduser -q --system --home $PWD --shell "/bin/sh" --no-create-home --uid $UID --gid $GID --disabled-password thunder
+fi
 
-/tmp/go-build/pan-xunlei-com/xunlei_cgi
+chown -R "$(id -un $UID):$(id -gn $UID)" /tmp/go-build/pan-xunlei-com/
+chown "$(id -un $UID):$(id -gn $UID)" /downloads
+su - "$(id -un $UID)" -c "/tmp/go-build/pan-xunlei-com/xunlei_cgi"
+# /tmp/go-build/pan-xunlei-com/xunlei_cgi
