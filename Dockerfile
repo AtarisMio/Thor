@@ -10,7 +10,8 @@ RUN echo 'start' && \
     rm -rf xunlei.spk && \
     tar -xvf package.tgz && \
     rm -rf package.tgz && \
-    sed -i 's/mounts/status/' bin/bin/xunlei-pan-cli-launcher.$(dpkg-architecture  -q DEB_BUILD_ARCH) && \
+    sed -i 's/mounts/status/' bin/bin/xunlei-pan-cli.${VERSION}.$(dpkg-architecture  -q DEB_BUILD_ARCH) && \
+    sed -i 's/mounts/status/' ui/index.cgi && \
     mv bin/bin/xunlei-pan-cli-launcher.$(dpkg-architecture  -q DEB_BUILD_ARCH) bin/bin/xunlei-pan-cli-launcher && \
     mv ui/index.cgi bin/bin/xunlei-pan-cli-web && \
     echo 'done'
@@ -37,6 +38,7 @@ RUN echo 'start' && \
     mkdir -p /var/packages/pan-xunlei-com/target/var && \
     mkdir -p /tmp/go-build/pan-xunlei-com/shares && \
     ln -s /tmp/go-build/pan-xunlei-com/target/var/pan-xunlei-com.sock /var/packages/pan-xunlei-com/target/var/pan-xunlei-com.sock && \
+    ln -s /tmp/go-build/pan-xunlei-com/target/var/pan-xunlei-com-launcher.sock /var/packages/pan-xunlei-com/target/var/pan-xunlei-com-launcher.sock && \
     echo 'done'
 ADD init /init
 ENV UID=99 GID=100
